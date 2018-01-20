@@ -20,16 +20,6 @@ for im in range(len(onlyfiles)):
     count += 1
 
     file_name, file_ext = os.path.splitext(onlyfiles[im])
-
-"""
-    if (file_ext == '.svg'):
-        input_loc = input_folder + onlyfiles[im]
-        output_loc = output_folder + '/' + file_name + output_image_type
-        print(input_loc)
-        print(output_loc)
-        cairosvg.svg2png(input_loc, output_loc)
-    else:
-"""
     img = Image.open(input_folder + onlyfiles[im])
 
     width, height = img.size
@@ -38,6 +28,8 @@ for im in range(len(onlyfiles)):
     #print(width)
     #print(height)
     # Resize if necessary
+    new_width = width
+    new_height = height
     if (largest_side > output_image_sl):
         scale = output_image_sl / float(largest_side)
         new_width = int(width * scale)
@@ -49,7 +41,7 @@ for im in range(len(onlyfiles)):
     y1 = int(math.floor((output_image_sl - new_height) / 2))
 
     #print(img.size)
-    enlarged_img = Image.new('RGB', (output_image_sl, output_image_sl), (255, 255, 255))
+    enlarged_img = Image.new('RGBA', (output_image_sl, output_image_sl), (255, 255, 255))
     enlarged_img.paste(img, (x1, y1))
 
     if not os.path.exists(output_folder):
